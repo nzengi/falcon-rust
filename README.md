@@ -129,32 +129,54 @@ Test Basic Ops      : OK    (0.xxx msec / execution)
 falcon-rust/
 ├── src/
 │   ├── lib.rs             # Main library entry point and tests
-│   ├── common.rs          # Common functions and constants
-│   ├── rng.rs             # Random number generation (ChaCha20-based)
-│   ├── samplerz.rs        # Gaussian sampling over integers
-│   ├── fft_constants.rs   # Precomputed FFT constants
-│   ├── ntt_constants.rs   # Precomputed NTT constants
-│   ├── fft.rs             # FFT over R[x] / (x^n + 1)
-│   ├── ntt.rs             # NTT over Z_q[x] / (x^n + 1)
-│   ├── ntrugen.rs         # NTRU polynomial generation
-│   ├── ffsampling.rs      # Fast Fourier sampling algorithm
-│   ├── encoding.rs        # Compression and decompression
-│   └── falcon.rs          # Main Falcon implementation
+│   ├── constants/         # Precomputed mathematical constants
+│   │   ├── mod.rs         # Constants module exports
+│   │   ├── fft_constants.rs    # FFT roots and related constants
+│   │   └── ntt_constants.rs    # NTT roots and modular constants
+│   ├── crypto/            # Cryptographic operations
+│   │   ├── mod.rs         # Crypto module exports
+│   │   ├── falcon.rs      # Main Falcon signature scheme
+│   │   ├── ntrugen.rs     # NTRU key generation
+│   │   └── encoding.rs    # Signature encoding/decoding
+│   ├── math/              # Mathematical operations
+│   │   ├── mod.rs         # Math module exports
+│   │   ├── fft.rs         # FFT over R[x] / (x^n + 1)
+│   │   ├── ntt.rs         # NTT over Z_q[x] / (x^n + 1)
+│   │   ├── ffsampling.rs  # Fast Fourier sampling
+│   │   └── samplerz.rs    # Gaussian sampling over integers
+│   ├── utils/             # Utility functions
+│   │   ├── mod.rs         # Utils module exports
+│   │   ├── common.rs      # Common functions and constants
+│   │   └── rng.rs         # Random number generation (ChaCha20)
+│   └── tests/             # Additional test files (future)
 ├── Cargo.toml             # Rust dependencies
 └── README.md              # This file
 ```
 
-### Module Descriptions
+### Module Organization
 
-- **`common.rs`**: Modulus constant (Q = 12289), polynomial split/merge, norm calculation
-- **`rng.rs`**: ChaCha20-based cryptographically secure random number generator
-- **`samplerz.rs`**: Gaussian sampling for lattice-based cryptography
+#### 📊 `constants/` - Mathematical Constants
+
+- **`fft_constants.rs`**: Precomputed FFT roots and related constants
+- **`ntt_constants.rs`**: Precomputed NTT roots and modular arithmetic constants
+
+#### 🔐 `crypto/` - Cryptographic Operations
+
+- **`falcon.rs`**: Main Falcon signature scheme implementation
+- **`ntrugen.rs`**: NTRU-based key pair generation algorithms
+- **`encoding.rs`**: Signature compression and decompression
+
+#### 🧮 `math/` - Mathematical Operations
+
 - **`fft.rs`**: Fast Fourier transform over real numbers
 - **`ntt.rs`**: Number theoretic transform over finite fields
-- **`ntrugen.rs`**: NTRU-based key pair generation
 - **`ffsampling.rs`**: Fast Fourier sampling - the heart of Falcon
-- **`encoding.rs`**: Signature compression and decompression
-- **`falcon.rs`**: Main Falcon algorithm and parameters
+- **`samplerz.rs`**: Gaussian sampling over integers
+
+#### 🛠️ `utils/` - Utility Functions
+
+- **`common.rs`**: Common functions, constants (Q = 12289), polynomial operations
+- **`rng.rs`**: ChaCha20-based cryptographically secure random number generator
 
 ## ⚡ Performance
 

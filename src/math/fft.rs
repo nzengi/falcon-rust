@@ -1,7 +1,7 @@
 // Falcon için FFT işlemleri (fft.py'den çevrildi)
 use num_complex::Complex64;
 use std::ops::Neg;
-use crate::fft_constants::get_roots_dict;
+use crate::constants::fft_constants::get_roots_dict;
 
 pub fn split_fft(f_fft: &[Complex64]) -> (Vec<Complex64>, Vec<Complex64>) {
     let n = f_fft.len();

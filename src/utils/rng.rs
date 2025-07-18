@@ -90,20 +90,11 @@ impl ChaCha20 {
     }
 
     pub fn randombytes(&mut self, k: usize) -> Vec<u8> {
-        if 2 * k > self.hexbytes.len() {
+        if k > self.hexbytes.len() {
             self.hexbytes = self.block_update();
         }
-        let out = self.hexbytes[..2 * k].to_vec();
-        // Python kodundaki gibi byte sırasını ters çeviriyoruz
-        let mut reversed = Vec::with_capacity(k);
-        for i in (0..2 * k).step_by(2).rev() {
-            reversed.push(out[i]);
-            if i + 1 < out.len() {
-                reversed.push(out[i + 1]);
-            }
-        }
-        self.hexbytes = self.hexbytes[2 * k..].to_vec();
-        reversed.reverse();
-        reversed
+        let out = self.hexbytes[..k].to_vec();
+        self.hexbytes = self.hexbytes[k..].to_vec();
+        out
     }
 } 

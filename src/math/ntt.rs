@@ -1,6 +1,6 @@
 // Falcon için NTT işlemleri (ntt.py'den çevrildi)
-use crate::common::Q;
-use crate::ntt_constants::{get_roots_dict, get_inv_mod_q};
+use crate::utils::common::Q;
+use crate::constants::ntt_constants::{get_roots_dict, get_inv_mod_q};
 
 const I2: u32 = 6145;
 
