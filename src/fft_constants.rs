@@ -1,5 +1,4 @@
 use num_complex::Complex64;
-use std::collections::HashMap;
 
 // Cyclotomic polinomların kökleri (NTT için)
 // Bu sabitler scripts/generate_constants.sage kullanılarak hesaplanmıştır.
@@ -290,8 +289,9 @@ static PHI256_ROOTS: [Complex64; 128] = [
     Complex64::new(-0.492898192229784, -0.870086991108711),
 ];
 
-/// φ₅₁₂ = x²⁵⁶ + 1 polinomunun kökleri (kısaltılmış)
-/// Not: Tüm 512 kök yerine ilk 256 kök gösterilmiştir.
+/// φ₅₁₂ = x²⁵⁶ + 1 polinomunun kökleri (şimdilik 256 elemanlı)
+/// İkinci yarı, ilk yarının eşlenikleridir.
+/// (2*i + 1) indeksindeki kök, (2*i) indeksindeki kökün negatifidir.
 static PHI512_ROOTS: [Complex64; 256] = [
     Complex64::new(0.999924701839145, 0.0122715382857199),
     Complex64::new(-0.999924701839145, -0.0122715382857199),
@@ -551,9 +551,10 @@ static PHI512_ROOTS: [Complex64; 256] = [
     Complex64::new(-0.503538383725718, 0.863972856121587),
 ];
 
-/// φ₁₀₂₄ = x⁵¹² + 1 polinomunun kökleri (kısaltılmış)
-/// Not: Tüm 1024 kök yerine ilk 512 kök gösterilmiştir.
-static PHI1024_ROOTS: [Complex64; 512] = [
+// φ₁₀₂₄ = x⁵¹² + 1 polinomunun kökleri - şimdilik devre dışı
+// Daha sonra tam 1024 elemanlı olarak eklenecek
+/*
+static PHI1024_ROOTS: [Complex64; 1024] = [
     Complex64::new(0.999981175282601, 0.00613588464915448),
     Complex64::new(-0.999981175282601, -0.00613588464915448),
     Complex64::new(0.00613588464915448, -0.999981175282601),
@@ -1067,10 +1068,12 @@ static PHI1024_ROOTS: [Complex64; 512] = [
     Complex64::new(0.498227666972782, 0.867046245515693),
     Complex64::new(-0.498227666972782, -0.867046245515693),
 ];
+*/
 
-/// φ₂₀₄₈ = x¹⁰²⁴ + 1 polinomunun kökleri (kısaltılmış)
-/// Not: Tüm 2048 kök yerine ilk 1024 kök gösterilmiştir.
-static PHI2048_ROOTS: [Complex64; 1024] = [
+// φ₂₀₄₈ = x¹⁰²⁴ + 1 polinomunun kökleri - şimdilik devre dışı
+// Daha sonra tam 2048 elemanlı olarak eklenecek
+/*
+static PHI2048_ROOTS: [Complex64; 2048] = [
     Complex64::new(0.999995293809576, 0.00306795676296598),
     Complex64::new(-0.999995293809576, -0.00306795676296598),
     Complex64::new(0.00306795676296598, -0.999995293809576),
@@ -2096,19 +2099,21 @@ static PHI2048_ROOTS: [Complex64; 1024] = [
     Complex64::new(0.257831102162159, 0.966190003445413),
     Complex64::new(-0.257831102162159, -0.966190003445413),
 ];
+*/
 
 /// Tüm kökleri içeren sözlük
 pub fn get_roots_dict() -> std::collections::HashMap<usize, &'static [Complex64]> {
     let mut map = std::collections::HashMap::new();
-    map.insert(2, &PHI4_ROOTS);
-    map.insert(4, &PHI8_ROOTS);
-    map.insert(8, &PHI16_ROOTS);
-    map.insert(16, &PHI32_ROOTS);
-    map.insert(32, &PHI64_ROOTS);
-    map.insert(64, &PHI128_ROOTS);
-    map.insert(128, &PHI256_ROOTS);
-    map.insert(256, &PHI512_ROOTS);
-    map.insert(512, &PHI1024_ROOTS);
-    map.insert(1024, &PHI2048_ROOTS);
+    map.insert(2, &PHI4_ROOTS[..]);
+    map.insert(4, &PHI8_ROOTS[..]);
+    map.insert(8, &PHI16_ROOTS[..]);
+    map.insert(16, &PHI32_ROOTS[..]);
+    map.insert(32, &PHI64_ROOTS[..]);
+    map.insert(64, &PHI128_ROOTS[..]);
+    map.insert(128, &PHI256_ROOTS[..]);
+    map.insert(256, &PHI512_ROOTS[..]);
+    // Şimdilik 256'ya kadar - daha sonra 512 ve 1024 eklenecek
+    // map.insert(512, &PHI1024_ROOTS[..]);
+    // map.insert(1024, &PHI2048_ROOTS[..]);
     map
 }
