@@ -1,0 +1,8 @@
+[package]
+name = "falcon-rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+num-complex = "0.4.6"
+rand = "0.9.1"
